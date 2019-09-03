@@ -22,21 +22,21 @@ window.onload = () => {
 const ice = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
 // Initialize user's own video
-document.onreadystatechange = () => {
-  if (document.readyState === "interactive") {
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: false,
-        video: true
-      })
-      .then(stream => {
-        localstream = stream;
-        localVideo.srcObject = stream;
-        localVideo.muted = true;
-      })
-      .catch(logError);
-  }
-};
+// document.onreadystatechange = () => {
+//   if (document.readyState === "interactive") {
+//     navigator.mediaDevices
+//       .getUserMedia({
+//         audio: false,
+//         video: false
+//       })
+//       .then(stream => {
+//         localstream = stream;
+//         localVideo.srcObject = stream;
+//         localVideo.muted = true;
+//       })
+//       .catch(logError);
+//   }
+// };
 
 const handleJoinSession = async () => {
   App.session = await App.cable.subscriptions.create("SessionChannel", {
@@ -72,7 +72,7 @@ const handleLeaveSession = () => {
 
   App.session.unsubscribe();
 
-  remoteVideoContainer.innerHTML = "";
+  // remoteVideoContainer.innerHTML = "";
 
   broadcastData({
     type: REMOVE_USER,
@@ -86,8 +86,8 @@ const joinRoom = data => {
 
 const removeUser = data => {
   console.log("removing user", data.from);
-  let video = document.getElementById(`remoteVideoContainer+${data.from}`);
-  video && video.remove();
+  // let video = document.getElementById(`remoteVideoContainer+${data.from}`);
+  // video && video.remove();
   delete pcPeers[data.from];
 };
 
@@ -154,13 +154,13 @@ const createPC = (userId, isOffer) => {
       });
   };
 
-  pc.onaddstream = event => {
-    const element = document.createElement("video");
-    element.id = `remoteVideoContainer+${userId}`;
-    element.autoplay = "autoplay";
-    element.srcObject = event.stream;
-    remoteVideoContainer.appendChild(element);
-  };
+  // pc.onaddstream = event => {
+  //   const element = document.createElement("video");
+  //   element.id = `remoteVideoContainer+${userId}`;
+  //   element.autoplay = "autoplay";
+  //   element.srcObject = event.stream;
+  //   remoteVideoContainer.appendChild(element);
+  // };
 
   pc.oniceconnectionstatechange = event => {
     if (pc.iceConnectionState == "disconnected") {
