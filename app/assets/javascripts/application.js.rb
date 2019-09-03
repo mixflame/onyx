@@ -11,7 +11,7 @@ require 'js'
 
 puts "Opal loaded."
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 puts "Welcome to Azeroth Game Engine #{VERSION}"
 
 # PixiJS setup
