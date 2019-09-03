@@ -35,3 +35,16 @@ puts "Bump loaded, renderer: #{bump.renderer}"
 `window.app = new PIXI.Application({width: 1024, height: 768, antialias: true})`
 # app = $$.app
 puts "PIXI app created"
+
+# multi-key input. read the map variable for which keycodes are currently being pressed
+map = {}
+$$.onkeydown = -> (e) {
+    `window.e = e`
+    map[`window.e.keyCode`] = `e.type` == 'keydown'
+    # puts "map: #{map}"
+}
+$$.onkeyup = -> (e) {
+    `window.ef = e`
+    map[`window.ef.keyCode`] = `ef.type` == 'keydown'
+    # puts "map: #{map}"
+}
