@@ -43446,4 +43446,3 @@ var PIXI = (function (exports) {
 }({}));
 PIXI.useDeprecated();
 window.PIXI = PIXI; // es6 workaround
-//# sourceMappingURL=pixi.js.map
