@@ -94,7 +94,32 @@ const removeUser = data => {
 const createPC = (userId, isOffer) => {
   let pc = new RTCPeerConnection(ice);
   pcPeers[userId] = pc;
-  pc.addStream(localstream);
+  // pc.addStream(localstream);
+
+  const dataChannelOptions = {
+  ordered: false, // do not guarantee order
+  maxRetransmits: 0, // UDP
+};
+
+  const dataChannel =
+  pc.createDataChannel("game", dataChannelOptions);
+
+  dataChannel.onerror = (error) => {
+    console.log("Data Channel Error:", error);
+  };
+
+  dataChannel.onmessage = (event) => {
+    console.log("Got Data Channel Message:", event.data);
+  };
+
+  dataChannel.onopen = () => {
+    console.log("UDP-like data channel is open.")
+    dataChannel.send("Hello World!");
+  };
+
+  dataChannel.onclose = () => {
+    console.log("The Data Channel is Closed");
+  };
 
   isOffer &&
     pc
