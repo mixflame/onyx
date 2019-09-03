@@ -1,5 +1,9 @@
 # put your main client side ruby game related scripts here
 
+PIXI = $$.PIXI
+loader = PIXI.loader
+resources = PIXI.loader.resources
+
 data_channel = nil
 
 # UDP-like data channel message received
@@ -21,4 +25,31 @@ end
 # data channel is closed
 def data_channel_closed
   puts "Data channel closed!"
+end
+
+# initial setup
+def setup
+  puts "Images loaded."
+  `window.handshake = new PIXI.Sprite(PIXI.loader.resources["handshake"].texture);`
+  handshake = $$.handshake
+
+  app = $$.app
+  handshake.x = 96 #app.screen.width / 2;
+  handshake.y = 96 #app.screen.height / 2;
+  #handshake.anchor.x = 0.5;
+  #handshake.anchor.y = 0.5;
+
+  app.stage.addChild(handshake)
+
+  app.ticker.add { |delta| gameLoop(delta) }
+end
+
+def gameLoop(delta)
+  # game loop tick
+end
+
+Document.ready? do
+  `document.body.appendChild(window.app.view)`
+  loader.add("handshake", "/assets/handshake.png")
+  loader.load { |loader, resources| setup }
 end
