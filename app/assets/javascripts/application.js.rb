@@ -30,10 +30,14 @@ resources = PIXI.loader.resources
 sprite = Native(`PIXI.Sprite`)
 text = Native(`PIXI.Text`)
 
-# BUMP = Native(`Bump`)
-# b = JS.new(BUMP, PIXI)
-# puts "b: #{BUMP}"
-
 `b = new Bump(PIXI)`
 bump = $$.b
 puts "Bump loaded, renderer: #{bump.renderer}"
+
+`window.app = new PIXI.Application({width: 1280, height: 690, antialias: true})`
+app = $$.app
+puts "PIXI app created: #{app}"
+
+Document.ready? do
+  `document.body.appendChild(window.app.view)`
+end
