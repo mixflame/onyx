@@ -110,14 +110,17 @@ const createPC = (userId, isOffer) => {
 
   dataChannel.onmessage = (event) => {
     console.log("Got Data Channel Message:", event.data);
+    Opal.Kernel.$data_channel_message(event.data);
   };
 
   dataChannel.onopen = () => {
     console.log("UDP-like data channel is open.");
+    Opal.Kernel.$data_channel_open();
   };
 
   dataChannel.onclose = () => {
     console.log("The Data Channel is Closed");
+    Opal.Kernel.$data_channel_closed();
   };
 
   pc.ondatachannel = function(ev) {
