@@ -14,3 +14,14 @@ end
 def data_channel_closed
   puts "I'm dead!"
 end
+
+
+# PixiJS setup
+
+PIXI = $$.PIXI
+type = "WebGL"
+if !PIXI.utils.isWebGLSupported
+  type = "canvas"
+end
+
+PIXI.utils.sayHello(type)

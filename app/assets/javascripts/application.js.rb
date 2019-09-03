@@ -1,9 +1,13 @@
 require 'opal'
 require 'opal_ujs'
 require 'turbolinks'
-require 'main'
+require 'pixi'
 require 'cable'
+require 'main'
 require 'signaling-server'
+require 'native'
+
+
 
 puts "Opal loaded."
 
