@@ -49,7 +49,7 @@ def setup
   #handshake.anchor.x = 0.5;
   #handshake.anchor.y = 0.5;
 
-  `window.app.stage.addChild(window.handshake)`
+  app.stage.addChild(handshake)
 end
 
 Document.ready? do
