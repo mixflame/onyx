@@ -9,9 +9,9 @@ end
 
 # data channel is open and connected
 def data_channel_open
+  puts "Data channel open!"
   data_channel = $$.data_channel
-  puts "I'm alive!"
-  send_message("ALIVE")
+  # send_message("ALIVE")
 end
 
 def send_message(msg)
@@ -20,16 +20,5 @@ end
 
 # data channel is closed
 def data_channel_closed
-  puts "I'm dead!"
+  puts "Data channel closed!"
 end
-
-
-# PixiJS setup
-
-PIXI = $$.PIXI
-type = "WebGL"
-if !PIXI.utils.isWebGLSupported
-  type = "canvas"
-end
-
-PIXI.utils.sayHello(type)
