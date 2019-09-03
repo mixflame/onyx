@@ -115,7 +115,6 @@ const createPC = (userId, isOffer) => {
 
   dataChannel.onopen = () => {
     console.log("UDP-like data channel is open.");
-    Opal.Kernel.$data_channel_open();
   };
 
   dataChannel.onclose = () => {
@@ -128,7 +127,8 @@ const createPC = (userId, isOffer) => {
     ev.channel.onopen = function() {
       console.log('Data channel is open and ready to be used.');
       ev.channel.send("Hello World!");
-      window.dataChannel = ev.channel;
+      window.data_channel = ev.channel;
+      Opal.Kernel.$data_channel_open();
     };
   };
 
@@ -225,3 +225,8 @@ const broadcastData = data => {
 };
 
 const logError = error => console.warn("Whoops! Error:", error);
+
+window.send_message = function(msg) {
+  if(window.data_channel != undefined)
+    window.data_channel.send(msg);
+}
