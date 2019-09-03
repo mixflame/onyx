@@ -113,12 +113,20 @@ const createPC = (userId, isOffer) => {
   };
 
   dataChannel.onopen = () => {
-    console.log("UDP-like data channel is open.")
-    dataChannel.send("Hello World!");
+    console.log("UDP-like data channel is open.");
   };
 
   dataChannel.onclose = () => {
     console.log("The Data Channel is Closed");
+  };
+
+  pc.ondatachannel = function(ev) {
+    console.log('Data channel is created!');
+    ev.channel.onopen = function() {
+      console.log('Data channel is open and ready to be used.');
+      ev.channel.send("Hello World!");
+      window.dataChannel = ev.channel;
+    };
   };
 
   isOffer &&
