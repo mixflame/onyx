@@ -37,7 +37,7 @@ const ice = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 //       .catch(logError);
 //   }
 // };
-
+window.host = false;
 const handleJoinSession = async () => {
   App.session = await App.cable.subscriptions.create("SessionChannel", {
     connected: () => {
@@ -81,6 +81,8 @@ const handleLeaveSession = () => {
 };
 
 const joinRoom = data => {
+  // someone joined us, we're the host
+  window.host = true;
   createPC(data.from, true);
 };
 
@@ -126,7 +128,7 @@ const createPC = (userId, isOffer) => {
     console.log('Data channel is created!');
     ev.channel.onopen = function() {
       console.log('Data channel is open and ready to be used.');
-      ev.channel.send("Hello World!");
+      // please send JSON
       window.data_channel = ev.channel;
       Opal.Kernel.$data_channel_open();
     };

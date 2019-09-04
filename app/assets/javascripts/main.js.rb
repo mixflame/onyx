@@ -9,6 +9,9 @@ data_channel = nil
 # UDP-like data channel message received
 def data_channel_message(data)
   puts "Message received! #{data}"
+  if !$$.host
+    receiveSync(data)
+  end
 end
 
 # data channel is open and connected
@@ -64,15 +67,32 @@ def setup
   app.ticker.add { |delta| gameLoop(delta) }
 end
 
+def sendSync
+  json = {x: $$.handshake.position.x, y: $$.handshake.position.y, rotation: $$.handshake.rotation}.to_json
+  send_message json
+end
+
+def receiveSync(data)
+  json = JSON.parse(data)
+  puts "receive sync: #{json}"
+  $$.handshake.position.x = json["x"]
+  $$.handshake.position.y = json["y"]
+  puts "handshake y: #{$$.handshake.position.y}"
+  $$.handshake.rotation = json["rotation"]
+end
+
 def gameLoop(delta)
   # game loop tick
 
+  if $$.host
+    $$.world.step(1/60)
 
-  $$.world.step(1/60)
+    $$.handshake.position.x = $$.circleBody.position[0]
+    $$.handshake.position.y = $$.circleBody.position[1]
+    $$.handshake.rotation = $$.circleBody.angle
 
-  $$.handshake.position.x = $$.circleBody.position[0]
-  $$.handshake.position.y = $$.circleBody.position[1]
-  $$.handshake.rotation = $$.circleBody.angle
+    sendSync
+  end
 end
 
 def fixedUpdate(event)

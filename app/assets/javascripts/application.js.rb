@@ -60,7 +60,8 @@ $$.onkeyup = -> (e) {
 $$.planeBody.addShape($$.planeShape)
 $$.world.addBody($$.planeBody)
 
-`circleBody = new p2.Body({mass: 5, position: [0, 2]});`
+# handshake rigidbody
+`circleBody = new p2.Body({mass: 1, position: [0, 200]});`
 `circleShape = new p2.Circle({ radius: 1 });`
 $$.circleBody.addShape($$.circleShape)
 $$.world.addBody($$.circleBody)
