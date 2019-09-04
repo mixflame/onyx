@@ -1,11 +1,12 @@
-require 'opal'
+require 'opal' # opal ruby compiler
 require 'opal_ujs'
 require 'turbolinks'
-require 'pixi'
-require 'bump'
-require 'cable'
-require 'main'
-require 'signaling-server'
+require 'p2' # p2 physics library
+require 'pixi' # PixiJS (graphics)
+require 'bump' # bumpjs (collision detection)
+require 'cable' # action cable
+require 'main' # your ruby game code lives here
+require 'signaling-server' # webrtc unreliable datachannel signaling server
 require 'native'
 require 'js'
 
@@ -48,3 +49,13 @@ $$.onkeyup = -> (e) {
     map[`window.ef.keyCode`] = `ef.type` == 'keydown'
     # puts "map: #{map}"
 }
+
+`world = new p2.World({gravity:[0, 9.82]});`
+
+`circleBody = new p2.Body({mass: 5, position: [96, 96]});`
+
+`circleShape = new p2.Circle({ radius: 1 });`
+
+$$.circleBody.addShape($$.circleShape)
+
+$$.world.addBody($$.circleBody)

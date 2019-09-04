@@ -46,6 +46,13 @@ end
 
 def gameLoop(delta)
   # game loop tick
+
+
+  $$.world.step(1/60)
+
+  $$.handshake.position.x = $$.circleBody.position[0]
+  $$.handshake.position.y = $$.circleBody.position[1]
+  $$.handshake.rotation = $$.circleBody.angle
 end
 
 Document.ready? do
