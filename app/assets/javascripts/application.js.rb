@@ -56,7 +56,7 @@ $$.onkeyup = -> (e) {
 
 # floor
 `planeShape = new p2.Plane();`
-`planeBody = new p2.Body({ mass: 0, position:[0, -500] });`
+`planeBody = new p2.Body({ mass: 0, position:[0, -100] });`
 $$.planeBody.addShape($$.planeShape)
 $$.world.addBody($$.planeBody)
 

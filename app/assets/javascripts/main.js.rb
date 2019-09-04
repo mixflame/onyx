@@ -50,6 +50,7 @@ def setup
   # container = $$.container
   handshake.x = 96 #app.screen.width / 2;
   handshake.y = 96 #app.screen.height / 2;
+  handshake.scale.y = -1
   #handshake.anchor.x = 0.5;
   #handshake.anchor.y = 0.5;
 
