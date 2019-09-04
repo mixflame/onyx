@@ -37,6 +37,7 @@ puts "Bump loaded, renderer: #{bump.renderer}"
 # app = $$.app
 puts "PIXI app created"
 
+
 # multi-key input. read the map variable for which keycodes are currently being pressed
 map = {}
 $$.onkeydown = -> (e) {
@@ -50,12 +51,22 @@ $$.onkeyup = -> (e) {
     # puts "map: #{map}"
 }
 
-`world = new p2.World({gravity:[0, 9.82]});`
+# add your bodies and shapes here
+`world = new p2.World();`
 
-`circleBody = new p2.Body({mass: 5, position: [96, 96]});`
+# floor
+`planeShape = new p2.Plane();`
+`planeBody = new p2.Body({ mass: 0, position:[0, -500] });`
+$$.planeBody.addShape($$.planeShape)
+$$.world.addBody($$.planeBody)
 
+`circleBody = new p2.Body({mass: 5, position: [0, 2]});`
 `circleShape = new p2.Circle({ radius: 1 });`
-
 $$.circleBody.addShape($$.circleShape)
-
 $$.world.addBody($$.circleBody)
+
+
+
+
+# this callback fires the fixedUpdate in main.js.rb
+$$.world.on 'postStep', -> (event) { fixedUpdate(event) }
