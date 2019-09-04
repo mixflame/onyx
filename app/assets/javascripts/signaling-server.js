@@ -38,6 +38,7 @@ const ice = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 //   }
 // };
 window.host = false;
+window.game_server_running = false;
 const handleJoinSession = async () => {
   App.session = await App.cable.subscriptions.create("SessionChannel", {
     connected: () => {
@@ -45,6 +46,7 @@ const handleJoinSession = async () => {
         type: JOIN_ROOM,
         from: currentUser
       });
+      window.game_server_running = true;
     },
     received: data => {
       console.log("received", data);
@@ -78,6 +80,8 @@ const handleLeaveSession = () => {
     type: REMOVE_USER,
     from: currentUser
   });
+
+  window.game_server_running = false;
 };
 
 const joinRoom = data => {
@@ -111,7 +115,7 @@ const createPC = (userId, isOffer) => {
   };
 
   dataChannel.onmessage = (event) => {
-    console.log("Got Data Channel Message:", event.data);
+    // console.log("Got Data Channel Message:", event.data);
     Opal.Kernel.$data_channel_message(event.data);
   };
 

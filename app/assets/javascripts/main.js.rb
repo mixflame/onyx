@@ -6,9 +6,14 @@ resources = PIXI.loader.resources
 
 data_channel = nil
 
+`window.remote_x = 0`
+`window.remote_y = 0`
+`window.local_x = 0`
+`window.local_y = 0`
+
 # UDP-like data channel message received
 def data_channel_message(data)
-  puts "Message received! #{data}"
+  # puts "Message received! #{data}"
   if !$$.host
     receiveSync(data)
   end
@@ -74,17 +79,40 @@ end
 
 def receiveSync(data)
   json = JSON.parse(data)
-  puts "receive sync: #{json}"
-  $$.handshake.position.x = json["x"]
-  $$.handshake.position.y = json["y"]
-  puts "handshake y: #{$$.handshake.position.y}"
+  # puts "receive sync: #{json}"
+  # $$.handshake.position.x = json["x"]
+  # $$.handshake.position.y = json["y"]
+  # puts "handshake y: #{$$.handshake.position.y}"
+  $$.remote_x = json["x"]
+  $$.remote_y = json["y"]
+  $$.local_x = $$.handshake.position.x
+  $$.local_y = $$.handshake.position.y
   $$.handshake.rotation = json["rotation"]
+end
+
+def interpolate(deltaTime)
+  x_difference = $$.remote_x - $$.local_x
+  if (x_difference < 2)
+      $$.handshake.position.x = $$.remote_x
+  else
+      $$.handshake.position.x += x_difference * deltaTime * 3
+  end
+  y_difference = $$.remote_y - $$.local_y
+  if (y_difference < 2)
+      $$.handshake.position.y = $$.remote_y
+  else
+      $$.handshake.position.y += y_difference * deltaTime * 3
+  end
 end
 
 def gameLoop(delta)
   # game loop tick
 
-  if $$.host
+  if !$$.host && $$.game_server_running
+    interpolate(delta)
+  end
+
+  if $$.host && $$.game_server_running
     $$.world.step(1/60)
 
     $$.handshake.position.x = $$.circleBody.position[0]
