@@ -18,7 +18,7 @@ gem 'rack-cors',    '~> 0.4.1'
 gem 'redis',        '~> 3.0'
 
 gem 'figaro',             '~> 1.1', '>= 1.1.1'
-gem 'json',               '~> 2.1'
+gem 'json',               '~> 2.3'
 gem 'rails_real_favicon', '~> 0.0.7'
 gem 'rest-client',        '~> 2.0', '>= 2.0.2'
 
